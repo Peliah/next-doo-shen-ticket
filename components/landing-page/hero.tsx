@@ -25,7 +25,7 @@ const Hero = () => {
                 />
             </div>
 
-            <main className="relative z-10 min-h-screen flex items-center mix-blend-difference">
+            <main className="relative z-10 min-h-screen flex pt-20 mix-blend-difference">
                 <div className="max-w-7xl mx-auto px-4 py-20">
                     <div className="max-w-4xl mx-auto text-center ">
                         <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 font-mono mix-blend-difference">
@@ -48,7 +48,7 @@ const Hero = () => {
                 </div>
             </main>
 
-            <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 animate-bounce">
                 <div className="w-6 h-10 border-2 border-white rounded-full flex justify-center">
                     <div className="w-1 h-3 bg-white rounded-full mt-2 animate-pulse"></div>
                 </div>
