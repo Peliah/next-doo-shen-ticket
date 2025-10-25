@@ -1,43 +1,43 @@
 import Image from 'next/image'
 import React from 'react'
-import { Ticket, Shield, Smartphone, Clock, Users, Star } from 'lucide-react'
+import { Ticket, Shield, Smartphone, Clock, Users, BarChart3 } from 'lucide-react'
 
 const Features = () => {
     const features = [
         {
             icon: Ticket,
-            title: "Easy Ticket Management",
-            description: "Create, manage, and track your event tickets with our intuitive dashboard. Set pricing, manage inventory, and monitor sales in real-time.",
+            title: "Comprehensive Ticket Management",
+            description: "Create, assign, and track support tickets with our intuitive dashboard. Manage ticket lifecycle from creation to resolution with powerful tools.",
             color: "text-blue-400"
         },
         {
             icon: Shield,
-            title: "Secure Transactions",
-            description: "Bank-level security ensures all transactions are protected. Your customers' data and payments are safe with our encrypted platform.",
+            title: "Secure & Reliable",
+            description: "Enterprise-grade security ensures all ticket data is protected. Your customer information and support history are safe with our encrypted platform.",
             color: "text-green-400"
         },
         {
             icon: Smartphone,
             title: "Mobile Optimized",
-            description: "Access your ticket management system anywhere, anytime. Our responsive design works perfectly on all devices.",
+            description: "Access your ticket management system anywhere, anytime. Our responsive design works perfectly on all devices for on-the-go support.",
             color: "text-purple-400"
         },
         {
             icon: Clock,
             title: "Real-time Updates",
-            description: "Get instant notifications about ticket sales, customer inquiries, and event updates. Stay connected with your audience.",
+            description: "Get instant notifications about new tickets, status changes, and customer responses. Stay connected with your support team.",
             color: "text-orange-400"
         },
         {
             icon: Users,
-            title: "Customer Management",
-            description: "Build and maintain relationships with your customers. Track purchase history and send targeted communications.",
+            title: "Team Collaboration",
+            description: "Assign tickets to team members, track workload, and collaborate effectively. Built-in communication tools for seamless teamwork.",
             color: "text-pink-400"
         },
         {
-            icon: Star,
-            title: "Analytics & Insights",
-            description: "Comprehensive analytics help you understand your audience, optimize pricing, and improve your event marketing strategy.",
+            icon: BarChart3,
+            title: "Analytics & Reporting",
+            description: "Comprehensive analytics help you understand support trends, team performance, and customer satisfaction. Make data-driven decisions.",
             color: "text-yellow-400"
         }
     ]
@@ -71,7 +71,7 @@ const Features = () => {
                             Why Choose DST?
                         </h2>
                         <p className="text-xl text-gray-200 font-mono mix-blend-difference">
-                            Powerful features designed to make event ticket management simple and profitable
+                            Powerful features designed to make support ticket management efficient and effective
                         </p>
                     </div>
 
@@ -106,13 +106,13 @@ const Features = () => {
                     <div className="text-center mt-16">
                         <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 shadow-2xl border border-white/20 max-w-2xl mx-auto">
                             <h3 className="text-2xl font-bold text-white mb-4 font-mono">
-                                Ready to Get Started?
+                                Ready to Streamline Your Support?
                             </h3>
                             <p className="text-gray-200 mb-6 font-mono">
-                                Join thousands of event organizers who trust DST for their ticket management needs.
+                                Join thousands of support teams who trust DST for their ticket management needs.
                             </p>
                             <button className="bg-white text-[#232323] px-8 py-4 rounded-lg font-mono font-semibold hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl">
-                                Start Your Free Trial
+                                Start Managing Tickets
                             </button>
                         </div>
                     </div>

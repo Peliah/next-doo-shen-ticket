@@ -32,6 +32,8 @@ export const useAuth = () => {
     const login = (userData: CurrentUser) => {
         localStorage.setItem('dst_current_user', JSON.stringify(userData))
         setUser(userData)
+        // Dispatch custom event to notify navbar
+        window.dispatchEvent(new Event('authChange'))
     }
 
     const logout = () => {

@@ -1,15 +1,62 @@
 'use client'
 
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { LogIn, UserPlus, LogOut, User } from 'lucide-react'
-import { useAuth } from '@/hooks/useAuth'
+import { CurrentUser } from '@/lib/schemas/auth'
 
 const Navbar = () => {
-    const { user, isLoading, logout } = useAuth()
+    const [user, setUser] = useState<CurrentUser | null>(null)
+    const [isLoading, setIsLoading] = useState(true)
+
+    useEffect(() => {
+        const checkAuth = () => {
+            try {
+                const currentUser = localStorage.getItem('dst_current_user')
+                if (currentUser) {
+                    const userData = JSON.parse(currentUser)
+                    setUser(userData)
+                } else {
+                    setUser(null)
+                }
+            } catch (error) {
+                console.error('Error parsing user data:', error)
+                localStorage.removeItem('dst_current_user')
+                setUser(null)
+            } finally {
+                setIsLoading(false)
+            }
+        }
+
+        // Check auth on mount
+        checkAuth()
+
+        // Listen for storage changes (when user logs in/out from other tabs)
+        const handleStorageChange = (e: StorageEvent) => {
+            if (e.key === 'dst_current_user') {
+                checkAuth()
+            }
+        }
+
+        // Listen for custom auth events (when user logs in/out from same tab)
+        const handleAuthChange = () => {
+            checkAuth()
+        }
+
+        window.addEventListener('storage', handleStorageChange)
+        window.addEventListener('authChange', handleAuthChange)
+
+        return () => {
+            window.removeEventListener('storage', handleStorageChange)
+            window.removeEventListener('authChange', handleAuthChange)
+        }
+    }, [])
 
     const handleLogout = () => {
-        logout()
+        localStorage.removeItem('dst_current_user')
+        setUser(null)
+        // Dispatch custom event to notify other components
+        window.dispatchEvent(new Event('authChange'))
         window.location.href = '/'
     }
 
@@ -28,13 +75,13 @@ const Navbar = () => {
                             </Link>
                         </li>
                         <li>
-                            <Link href="/events" className="hover:text-gray-300 transition-colors">
-                                Events
+                            <Link href="/dashboard/tickets" className="hover:text-gray-300 transition-colors">
+                                Tickets
                             </Link>
                         </li>
                         <li>
-                            <Link href="/tickets" className="hover:text-gray-300 transition-colors">
-                                My Tickets
+                            <Link href="/dashboard" className="hover:text-gray-300 transition-colors">
+                                Dashboard
                             </Link>
                         </li>
                         <li>
@@ -51,7 +98,7 @@ const Navbar = () => {
                             <>
                                 <Link href="/dashboard" className="flex items-center space-x-2 px-4 py-2 border border-white rounded-md hover:bg-white hover:text-[#232323] transition-colors">
                                     <User className="h-4 w-4" />
-                                    <span>{user.name.split(' ')[0]}</span>
+                                    <span>{user.name}</span>
                                 </Link>
                                 <button
                                     onClick={handleLogout}

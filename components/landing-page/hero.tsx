@@ -29,19 +29,19 @@ const Hero = () => {
                 <div className="max-w-7xl mx-auto px-4 py-20">
                     <div className="max-w-4xl mx-auto text-center ">
                         <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 font-mono mix-blend-difference">
-                            DooShen Tickets: we sell, we earn.
+                            DST: Streamline Your Support
                         </h1>
 
                         <p className="text-xl md:text-2xl text-gray-200 mb-8 max-w-2xl mx-auto font-mono mix-blend-difference">
-                            Your premier destination for event ticket management.
-                            Discover, purchase, and manage your event tickets with ease.
+                            Professional ticket management system for efficient support operations.
+                            Track, resolve, and manage customer tickets with powerful tools.
                         </p>
 
                         <Link
-                            href="/events"
+                            href="/dashboard"
                             className="group inline-flex items-center space-x-2 px-8 py-4 bg-white text-[#232323] rounded-lg hover:bg-gray-100 transition-all duration-300 font-mono font-semibold"
                         >
-                            <span>Explore Events</span>
+                            <span>Manage Tickets</span>
                             <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
                         </Link>
                     </div>
