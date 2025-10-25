@@ -3,14 +3,14 @@
 import React, { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { LogOut, Ticket, TrendingUp, Settings, BarChart3 } from 'lucide-react'
+import { Ticket, TrendingUp, Settings, BarChart3 } from 'lucide-react'
 import { toast } from 'sonner'
 import { useAuth } from '@/hooks/useAuth'
 import { useTickets } from '@/hooks/useTickets'
 
 const DashboardPage = () => {
     const router = useRouter()
-    const { user, isLoading, logout } = useAuth()
+    const { user, isLoading } = useAuth()
     const { tickets, getTicketStats } = useTickets()
 
     useEffect(() => {
@@ -20,11 +20,6 @@ const DashboardPage = () => {
         }
     }, [user, isLoading, router])
 
-    const handleLogout = () => {
-        logout()
-        toast.success('Logged out successfully')
-        router.push('/')
-    }
 
     if (isLoading) {
         return (
