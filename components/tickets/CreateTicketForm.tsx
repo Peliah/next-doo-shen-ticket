@@ -60,7 +60,7 @@ const CreateTicketForm = ({ onClose }: CreateTicketFormProps) => {
                         <input
                             {...register('title')}
                             type="text"
-                            className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-md text-white placeholder-gray-400 focus:outline-none focus:border-blue-400"
+                            className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-md text-white placeholder-gray-400 focus:outline-none focus:border-blue-400 font-mono"
                             placeholder="Enter ticket title"
                         />
                         {errors.title && (
@@ -78,7 +78,7 @@ const CreateTicketForm = ({ onClose }: CreateTicketFormProps) => {
                         <textarea
                             {...register('description')}
                             rows={3}
-                            className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-md text-white placeholder-gray-400 focus:outline-none focus:border-blue-400 resize-none"
+                            className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-md text-white placeholder-gray-400 focus:outline-none focus:border-blue-400 resize-none font-mono"
                             placeholder="Enter ticket description"
                         />
                         {errors.description && (
@@ -95,7 +95,7 @@ const CreateTicketForm = ({ onClose }: CreateTicketFormProps) => {
                         </label>
                         <select
                             {...register('status')}
-                            className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-md text-white focus:outline-none focus:border-blue-400"
+                            className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-md text-white focus:outline-none focus:border-blue-400 font-mono"
                         >
                             <option value="">Select status</option>
                             {Object.values(TicketStatus).map(status => (
@@ -118,7 +118,7 @@ const CreateTicketForm = ({ onClose }: CreateTicketFormProps) => {
                         </label>
                         <select
                             {...register('priority')}
-                            className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-md text-white focus:outline-none focus:border-blue-400"
+                            className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-md text-white focus:outline-none focus:border-blue-400 font-mono"
                         >
                             <option value="">Select priority</option>
                             {Object.values(TicketPriority).map(priority => (
@@ -142,7 +142,7 @@ const CreateTicketForm = ({ onClose }: CreateTicketFormProps) => {
                         <input
                             {...register('assignee')}
                             type="text"
-                            className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-md text-white placeholder-gray-400 focus:outline-none focus:border-blue-400"
+                            className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-md text-white placeholder-gray-400 focus:outline-none focus:border-blue-400 font-mono"
                             placeholder="Enter assignee name"
                         />
                         {errors.assignee && (

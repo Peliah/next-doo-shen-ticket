@@ -1,6 +1,5 @@
 import { z } from 'zod'
 
-// Ticket status enum
 export const TicketStatus = {
     OPEN: 'open',
     IN_PROGRESS: 'in_progress',
@@ -9,7 +8,6 @@ export const TicketStatus = {
 
 export type TicketStatusType = typeof TicketStatus[keyof typeof TicketStatus]
 
-// Priority enum
 export const TicketPriority = {
     LOW: 'low',
     MEDIUM: 'medium',
@@ -19,9 +17,8 @@ export const TicketPriority = {
 
 export type TicketPriorityType = typeof TicketPriority[keyof typeof TicketPriority]
 
-// Ticket schema for validation
 export const ticketSchema = z.object({
-    id: z.string().optional(), // Will be generated if not provided
+    id: z.string().optional(),
     title: z.string()
         .min(1, 'Title is required')
         .min(3, 'Title must be at least 3 characters')
@@ -36,13 +33,12 @@ export const ticketSchema = z.object({
     assignee: z.string()
         .max(50, 'Assignee name must be less than 50 characters')
         .optional(),
-    createdAt: z.string().optional(), // Will be generated if not provided
+    createdAt: z.string().optional(),
     updatedAt: z.string().optional() // Will be generated if not provided
 })
 
 export type Ticket = z.infer<typeof ticketSchema>
 
-// Create ticket schema (without id and timestamps)
 export const createTicketSchema = ticketSchema.omit({
     id: true,
     createdAt: true,
@@ -51,7 +47,6 @@ export const createTicketSchema = ticketSchema.omit({
 
 export type CreateTicket = z.infer<typeof createTicketSchema>
 
-// Update ticket schema (all fields optional except id)
 export const updateTicketSchema = ticketSchema.partial().required({ id: true })
 
 export type UpdateTicket = z.infer<typeof updateTicketSchema>

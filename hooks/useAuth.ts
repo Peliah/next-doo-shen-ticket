@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 import { CurrentUser, User } from '@/lib/schemas/auth'
 
-// Custom hook for authentication state management
 export const useAuth = () => {
     const [user, setUser] = useState<CurrentUser | null>(null)
     const [isLoading, setIsLoading] = useState(true)
@@ -13,14 +12,14 @@ export const useAuth = () => {
     useEffect(() => {
         const checkAuth = () => {
             try {
-                const currentUser = localStorage.getItem('dst_current_user')
-                if (currentUser) {
-                    const userData = JSON.parse(currentUser)
+                const sessionToken = localStorage.getItem('ticketapp_session')
+                if (sessionToken) {
+                    const userData = JSON.parse(sessionToken)
                     setUser(userData)
                 }
             } catch (error) {
-                console.error('Error parsing user data:', error)
-                localStorage.removeItem('dst_current_user')
+                console.error('Error parsing session data:', error)
+                localStorage.removeItem('ticketapp_session')
             } finally {
                 setIsLoading(false)
             }
@@ -30,14 +29,13 @@ export const useAuth = () => {
     }, [])
 
     const login = (userData: CurrentUser) => {
-        localStorage.setItem('dst_current_user', JSON.stringify(userData))
+        localStorage.setItem('ticketapp_session', JSON.stringify(userData))
         setUser(userData)
-        // Dispatch custom event to notify navbar
         window.dispatchEvent(new Event('authChange'))
     }
 
     const logout = () => {
-        localStorage.removeItem('dst_current_user')
+        localStorage.removeItem('ticketapp_session')
         setUser(null)
     }
 
@@ -50,7 +48,6 @@ export const useAuth = () => {
     }
 }
 
-// Custom hook for login functionality
 export const useLogin = () => {
     const router = useRouter()
     const { login } = useAuth()
@@ -60,14 +57,11 @@ export const useLogin = () => {
         setIsLoading(true)
 
         try {
-            // Simulate API call delay
             await new Promise(resolve => setTimeout(resolve, 1000))
 
-            // Get stored users from localStorage
             const storedUsers = localStorage.getItem('dst_users')
             const users: User[] = storedUsers ? JSON.parse(storedUsers) : []
 
-            // Find user
             const user = users.find((u) => u.email === email && u.password === password)
 
             if (user) {
@@ -86,7 +80,8 @@ export const useLogin = () => {
                 toast.error('Invalid email or password')
                 return { success: false, error: 'Invalid email or password' }
             }
-        } catch (error) {
+        } catch (err) {
+            console.error('Login error:', err)
             toast.error('An error occurred. Please try again.')
             return { success: false, error: 'An error occurred. Please try again.' }
         } finally {
@@ -100,7 +95,6 @@ export const useLogin = () => {
     }
 }
 
-// Custom hook for register functionality
 export const useRegister = () => {
     const router = useRouter()
     const { login } = useAuth()
@@ -110,21 +104,17 @@ export const useRegister = () => {
         setIsLoading(true)
 
         try {
-            // Simulate API call delay
             await new Promise(resolve => setTimeout(resolve, 1000))
 
-            // Get stored users from localStorage
             const storedUsers = localStorage.getItem('dst_users')
             const users: User[] = storedUsers ? JSON.parse(storedUsers) : []
 
-            // Check if user already exists
             const existingUser = users.find((u) => u.email === email)
             if (existingUser) {
                 toast.error('An account with this email already exists')
                 return { success: false, error: 'An account with this email already exists' }
             }
 
-            // Create new user
             const newUser: User = {
                 id: Date.now().toString(),
                 name: name.trim(),
@@ -133,11 +123,9 @@ export const useRegister = () => {
                 createdAt: new Date().toISOString(),
             }
 
-            // Store user
             users.push(newUser)
             localStorage.setItem('dst_users', JSON.stringify(users))
 
-            // Create current user session
             const currentUser: CurrentUser = {
                 id: newUser.id,
                 email: newUser.email,
@@ -149,7 +137,8 @@ export const useRegister = () => {
             toast.success('Account created successfully! Welcome to DST!')
             router.push('/dashboard')
             return { success: true }
-        } catch (error) {
+        } catch (err) {
+            console.error('Login error:', err)
             toast.error('An error occurred. Please try again.')
             return { success: false, error: 'An error occurred. Please try again.' }
         } finally {

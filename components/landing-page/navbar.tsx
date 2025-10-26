@@ -12,33 +12,30 @@ const Navbar = () => {
     useEffect(() => {
         const checkAuth = () => {
             try {
-                const currentUser = localStorage.getItem('dst_current_user')
-                if (currentUser) {
-                    const userData = JSON.parse(currentUser)
+                const sessionToken = localStorage.getItem('ticketapp_session')
+                if (sessionToken) {
+                    const userData = JSON.parse(sessionToken)
                     setUser(userData)
                 } else {
                     setUser(null)
                 }
             } catch (error) {
-                console.error('Error parsing user data:', error)
-                localStorage.removeItem('dst_current_user')
+                console.error('Error parsing session data:', error)
+                localStorage.removeItem('ticketapp_session')
                 setUser(null)
             } finally {
                 setIsLoading(false)
             }
         }
 
-        // Check auth on mount
         checkAuth()
 
-        // Listen for storage changes (when user logs in/out from other tabs)
         const handleStorageChange = (e: StorageEvent) => {
-            if (e.key === 'dst_current_user') {
+            if (e.key === 'ticketapp_session') {
                 checkAuth()
             }
         }
 
-        // Listen for custom auth events (when user logs in/out from same tab)
         const handleAuthChange = () => {
             checkAuth()
         }
@@ -53,9 +50,8 @@ const Navbar = () => {
     }, [])
 
     const handleLogout = () => {
-        localStorage.removeItem('dst_current_user')
+        localStorage.removeItem('ticketapp_session')
         setUser(null)
-        // Dispatch custom event to notify other components
         window.dispatchEvent(new Event('authChange'))
         window.location.href = '/'
     }

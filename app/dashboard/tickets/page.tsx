@@ -1,7 +1,10 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { Plus, Filter, Search } from 'lucide-react'
+import { toast } from 'sonner'
+import { useAuth } from '@/hooks/useAuth'
 import { useTickets } from '@/hooks/useTickets'
 import { Ticket } from '@/lib/schemas/ticket'
 import CreateTicketForm from '@/components/tickets/CreateTicketForm'
@@ -10,6 +13,8 @@ import DeleteTicketModal from '@/components/tickets/DeleteTicketModal'
 import TicketCard from '@/components/tickets/TicketCard'
 
 const TicketsPage = () => {
+    const router = useRouter()
+    const { user, isLoading: authLoading } = useAuth()
     const { tickets, isLoading, deleteTicket, getTicketStats } = useTickets()
     const [showCreateForm, setShowCreateForm] = useState(false)
     const [editingTicket, setEditingTicket] = useState<Ticket | null>(null)
@@ -37,7 +42,14 @@ const TicketsPage = () => {
         }
     }
 
-    if (isLoading) {
+    useEffect(() => {
+        if (!authLoading && !user) {
+            toast.error('Please log in to access ticket management')
+            router.push('/auth?mode=login')
+        }
+    }, [user, authLoading, router])
+
+    if (isLoading || authLoading) {
         return (
             <div className="min-h-screen bg-[#232323] flex items-center justify-center">
                 <div className="text-white font-mono text-xl">Loading tickets...</div>
@@ -95,7 +107,7 @@ const TicketsPage = () => {
                                 placeholder="Search tickets by title, description, or assignee..."
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
-                                className="w-full pl-10 pr-4 py-2 bg-white/10 border border-white/20 rounded-md text-white placeholder-gray-400 focus:outline-none focus:border-blue-400"
+                                className="w-full pl-10 pr-4 py-2 bg-white/10 border border-white/20 rounded-md text-white placeholder-gray-400 focus:outline-none focus:border-blue-400 font-mono"
                             />
                         </div>
                         <div className="flex items-center space-x-2">
@@ -103,7 +115,7 @@ const TicketsPage = () => {
                             <select
                                 value={statusFilter}
                                 onChange={(e) => setStatusFilter(e.target.value)}
-                                className="px-3 py-2 bg-white/10 border border-white/20 rounded-md text-white focus:outline-none focus:border-blue-400"
+                                className="px-3 py-2 bg-white/10 border border-white/20 rounded-md text-white focus:outline-none focus:border-blue-400 font-mono"
                             >
                                 <option value="all" className="bg-[#232323]">All Status</option>
                                 <option value="open" className="bg-[#232323]">Open</option>

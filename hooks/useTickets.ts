@@ -4,12 +4,10 @@ import { useState, useEffect } from 'react'
 import { toast } from 'sonner'
 import { Ticket, CreateTicket, UpdateTicket, TicketStatus, TicketPriority } from '@/lib/schemas/ticket'
 
-// Custom hook for ticket management
 export const useTickets = () => {
     const [tickets, setTickets] = useState<Ticket[]>([])
     const [isLoading, setIsLoading] = useState(true)
 
-    // Load tickets from localStorage
     useEffect(() => {
         const loadTickets = () => {
             try {
@@ -18,7 +16,6 @@ export const useTickets = () => {
                     const parsedTickets = JSON.parse(storedTickets)
                     setTickets(parsedTickets)
                 } else {
-                    // Initialize with sample data
                     const sampleTickets: Ticket[] = [
                         {
                             id: '1',
@@ -85,7 +82,6 @@ export const useTickets = () => {
         loadTickets()
     }, [])
 
-    // Save tickets to localStorage
     const saveTickets = (newTickets: Ticket[]) => {
         try {
             localStorage.setItem('dst_tickets', JSON.stringify(newTickets))
@@ -96,7 +92,6 @@ export const useTickets = () => {
         }
     }
 
-    // Create a new ticket
     const createTicket = (ticketData: CreateTicket) => {
         const newTicket: Ticket = {
             ...ticketData,
@@ -111,7 +106,6 @@ export const useTickets = () => {
         return newTicket
     }
 
-    // Update an existing ticket
     const updateTicket = (id: string, ticketData: UpdateTicket) => {
         const updatedTickets = tickets.map(ticket =>
             ticket.id === id
@@ -124,24 +118,20 @@ export const useTickets = () => {
         return updatedTickets.find(ticket => ticket.id === id)
     }
 
-    // Delete a ticket
     const deleteTicket = (id: string) => {
         const updatedTickets = tickets.filter(ticket => ticket.id !== id)
         saveTickets(updatedTickets)
         toast.success('Ticket deleted successfully!')
     }
 
-    // Get ticket by ID
     const getTicketById = (id: string) => {
         return tickets.find(ticket => ticket.id === id)
     }
 
-    // Get tickets by status
     const getTicketsByStatus = (status: string) => {
         return tickets.filter(ticket => ticket.status === status)
     }
 
-    // Get ticket statistics
     const getTicketStats = () => {
         const total = tickets.length
         const open = tickets.filter(t => t.status === 'open').length
